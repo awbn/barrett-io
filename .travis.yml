@@ -5,6 +5,7 @@ php:
 branches:
   only:
     - master
+    - staging
 
 before_install:
   - "git submodule update --init --recursive"
@@ -30,7 +31,7 @@ script:
   # tests would be here.
   - echo $TRAVIS_BRANCH
   # deployment from here down.
-  - PAGODABOX_APP=$(( "$TRAVIS_BRANCH" == "master" ? $PAGODABOX_PROD : $PAGODABOX_STAGING ))
+  - PAGODABOX_APP=$PAGODABOX_STAGING && [[ "$TRAVIS_BRANCH" == "master" ]] && PAGODABOX_APP=$PAGODABOX_PROD
   - gem install pagoda
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
