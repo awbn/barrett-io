@@ -24,7 +24,7 @@ env:
     # PAGODABOX_PASSWORD
     - secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
     # PAGODABOX_APP
-    - secure: "lwx3GdmE1ycu7jlsoj4JG+4SLWAEuq/Jg/sVGoKxlMPxUlRzW6AsLOqF8b9s\nTcZXwSdLEoxxv27czWqzF6rOlPRcW5D2lyn/KSiS27pvR9i/8iCUMyj12P7V\nytcXQgohQtTjod42GJHTfk57TOaOdcHOMEUg9cPqUpenz/iy9PI="
+    - secure: "qTJWoaCpkOf0/kcimqS4pEeCia2heeXmdJWtvRxLvRIQ/x0gtYGF8pTVtBzM\n0KAFV0XAmLB7Z+XUANgi/2K0+ZGymmqpTDrzEQWjNhroc2SoRENXDtj3Kj+4\n0WD2wVV4HA3BVhLHOOh7w2wh1yArLS9upLeHd1JNEcJKt0raMQg="
 
 script:
   - echo 'Travis run' # tests would be here.
