@@ -33,9 +33,9 @@ env:
 script:
   # tests would be here.
   # deployment from here down.
-  - GREEN=
   - if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'${NORMAL}"
+  - echo "\[\e[01;32m\]test"  
   - gem install pagoda
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
