@@ -28,7 +28,7 @@ env:
 
 script:
   # tests would be here.
-  echo $TRAVIS_BRANCH
+  - echo $TRAVIS_BRANCH
   # deployment from here down.
   - PAGODABOX_APP=$(( "$TRAVIS_BRANCH" == "master" ? $PAGODABOX_PROD : $PAGODABOX_STAGING ))
   - gem install pagoda
