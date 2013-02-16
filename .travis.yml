@@ -41,6 +41,8 @@ script:
   - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
+  - xyz
+  - echo $TRAVIS_TEST_RESULT
   - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
   - git push --force pagoda $TRAVIS_BRANCH
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy
