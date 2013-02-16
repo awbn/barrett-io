@@ -24,11 +24,14 @@ env:
     # PAGODABOX_PASSWORD
     - secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
     # PAGODABOX_APP
-    - PAGODABOX_APP=staging-barrett-io
+    - PAGODABOX_STAGING=staging-barrett-io
+    - PAGODABOX_PROD=staging-barrett-io
 
 script:
   # tests would be here.
+  echo $TRAVIS_BRANCH
   # deployment from here down.
+  - PAGODABOX_APP=$(( "$TRAVIS_BRANCH" == "master" ? $PAGODABOX_PROD : $PAGODABOX_STAGING ))
   - gem install pagoda
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
@@ -39,5 +42,5 @@ script:
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
   - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
-  - git push --force pagoda master
+  - git push --force pagoda $TRAVIS_BRANCH
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy
