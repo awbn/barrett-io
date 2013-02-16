@@ -41,4 +41,4 @@ script:
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
   #- git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
   - git push --force pagoda master
-  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy
+  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy --branch=master
