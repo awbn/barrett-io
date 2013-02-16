@@ -1,0 +1,42 @@
+language: php
+
+php:
+  - 5.3
+
+branches:
+  only:
+    - master
+
+before_install:
+  - "git submodule update --init --recursive"
+
+notifications:
+  email:
+    recipients:
+      - build@barrett.io
+    on_success: always
+    on_failure: always
+
+env:
+  global:
+    # PAGODABOX_USERNAME
+    - secure: "qRtO1vgnNK4x/Pq4TLLDaSjmKdSG82QNoB5NEAAHurHq37LXSxvUg5z8FK/C\nnVDRidS7Hq5LD8moIlWGhcmn/8EKYW8ubJYRuv3E/ePSvcyxQ45WGXhh0qh0\niD1vYxs9RT7uCYpXr+LjLMnlKhN51FCwlFlToPbkwl/LSEvuyng="
+    # PAGODABOX_PASSWORD
+    - secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
+    # PAGODABOX_APP
+    - secure: "lwx3GdmE1ycu7jlsoj4JG+4SLWAEuq/Jg/sVGoKxlMPxUlRzW6AsLOqF8b9s\nTcZXwSdLEoxxv27czWqzF6rOlPRcW5D2lyn/KSiS27pvR9i/8iCUMyj12P7V\nytcXQgohQtTjod42GJHTfk57TOaOdcHOMEUg9cPqUpenz/iy9PI="
+
+script:
+  - echo 'Travis run' # tests would be here.
+  # deployment from here down.
+  - gem install pagoda
+  - ssh-keygen -N "" -f ~/.ssh/pagoda
+  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
+  - echo "Host git.pagodabox.com" >> ~/.ssh/config
+  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+  - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
+  - echo "   IdentitiesOnly yes" >> ~/.ssh/config
+  - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP
+  - git push --force pagoda master
