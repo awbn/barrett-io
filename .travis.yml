@@ -25,7 +25,7 @@ env:
     - secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
     # PAGODABOX_APP
     - PAGODABOX_STAGING=staging-barrett-io
-    - PAGODABOX_PROD=staging-barrett-io
+    - PAGODABOX_PROD=barrett-io
 
 script:
   # tests would be here.
