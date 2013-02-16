@@ -19,6 +19,9 @@ notifications:
 
 env:
   global:
+    - GREEN=`tput setaf 2`
+    - RED=`tput setaf 1`
+    - NORMAL=`tput sgr0`
     # PAGODABOX_USERNAME
     - secure: "c3tOOwmueCSeVub6VE1qFL7bGVlC4Xj1BIYSU89Z9iJpgjokn0O1dW1cGwuv\nf/jQdPBhWmi42gw7Jvzc6q4H05CgIvkOedcSxdiQXIU7a5oc+80PCt48WTtb\nroYNcLQXAvzC6gbu+9lhtkjpd1H6xcnrkmbKi2LCIOEQAfOgmk4="
     # PAGODABOX_PASSWORD
@@ -31,7 +34,7 @@ script:
   # tests would be here.
   # deployment from here down.
   - if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
-  - echo "Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
+  - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'${NORMAL}"
   - gem install pagoda
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
@@ -41,9 +44,6 @@ script:
   - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
-  - echo $TRAVIS_TEST_RESULT
-  - xyz
-  - echo $TRAVIS_TEST_RESULT
   - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
-  - git push --force pagoda $TRAVIS_BRANCH
-  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy
+  - if [ "$TRAVIS_TEST_RESULT" -eq "0" ]; then git push --force pagoda $TRAVIS_BRANCH; fi
+  - if [ "$TRAVIS_TEST_RESULT" -eq "0" ]; then pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy; else echo "${RED}Build failed.  Skipping Pagoda deployment.${NORMAL}"; fi
