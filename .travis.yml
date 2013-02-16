@@ -27,17 +27,18 @@ env:
     - PAGODABOX_APP=staging-barrett-io
 
 script:
-  - echo 'Travis run' # tests would be here.
+  # tests would be here.
   # deployment from here down.
   - gem install pagoda
+  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP init
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
   - echo "Host git.pagodabox.com" >> ~/.ssh/config
   - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
-  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   CheckHostIP yes" >> ~/.ssh/config
   - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
-  - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
+  #- git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
   - git push --force pagoda master
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy
