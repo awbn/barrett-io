@@ -20,11 +20,11 @@ notifications:
 env:
   global:
     # PAGODABOX_USERNAME
-    - secure: "qRtO1vgnNK4x/Pq4TLLDaSjmKdSG82QNoB5NEAAHurHq37LXSxvUg5z8FK/C\nnVDRidS7Hq5LD8moIlWGhcmn/8EKYW8ubJYRuv3E/ePSvcyxQ45WGXhh0qh0\niD1vYxs9RT7uCYpXr+LjLMnlKhN51FCwlFlToPbkwl/LSEvuyng="
+    - secure: "c3tOOwmueCSeVub6VE1qFL7bGVlC4Xj1BIYSU89Z9iJpgjokn0O1dW1cGwuv\nf/jQdPBhWmi42gw7Jvzc6q4H05CgIvkOedcSxdiQXIU7a5oc+80PCt48WTtb\nroYNcLQXAvzC6gbu+9lhtkjpd1H6xcnrkmbKi2LCIOEQAfOgmk4="
     # PAGODABOX_PASSWORD
     - secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
     # PAGODABOX_APP
-    - secure: "LXDZEhDZlW2e44Qrk6Nx4OZ2b3VynUaHWXKALhZwGlgv6y//tEizyBQdIoIb\nmE1cK2I/JbpsRQr/CZHQ6N87b6HIeRR8nqBeEnUEc/7Y/5Wxd6G4neBGJZFQ\nPpsHFjp+11SC9Fo2Diep4xyhFLFPut61zxo/kd/hSBxRN8Bwv9g="
+    - PAGODABOX_APP=staging-barrett-io
 
 script:
   - echo 'Travis run' # tests would be here.
@@ -38,5 +38,6 @@ script:
   - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
-  - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP
+  - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
   - git push --force pagoda master
+  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy
