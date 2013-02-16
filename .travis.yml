@@ -30,7 +30,6 @@ script:
   # tests would be here.
   # deployment from here down.
   - gem install pagoda
-  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP init
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
   - echo "Host git.pagodabox.com" >> ~/.ssh/config
@@ -39,6 +38,6 @@ script:
   - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
-  #- git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
+  - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
   - git push --force pagoda master
-  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy --branch=master
+  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP --branch==master deploy
