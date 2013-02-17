@@ -35,15 +35,14 @@ before_install:
 script:
   ### TESTS ###
   # Verify Pagodabox Boxfile exists
-  - "[ ! -f ./Boxfile ] && echo \"${RED}Pagodabox Boxfile Missing.\""
-  - echo $?
+  - if [ ! -f "./Boxfile1" ]; then echo "${RED}Pagodabox Boxfile Missing."; export TRAVIS_TEST_RESULT=1; fi
   ### DEPLOYMENT ###
   - echo $TRAVIS_TEST_RESULT
   # Deploy to Pagodabox
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - gem install pagoda
-  - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
+  - if [ "$TRAVIS_TEST_RESULT" -eq "0" ]; then pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub; fi
   - echo "Host git.pagodabox.com" >> ~/.ssh/config
   - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
   - echo "   CheckHostIP yes" >> ~/.ssh/config
