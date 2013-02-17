@@ -35,9 +35,8 @@ before_install:
 script:
   ### TESTS ###
   # Verify Pagodabox Boxfile exists
-  - if [ ! -f "./Boxfile1" ]; then echo "${RED}Pagodabox Boxfile Missing."; export TRAVIS_TEST_RESULT=1; fi
+  - if [ ! -f "./Boxfile" ]; then echo "${RED}Pagodabox Boxfile Missing."; export TRAVIS_TEST_RESULT=1; fi
   ### DEPLOYMENT ###
-  - echo $TRAVIS_TEST_RESULT
   # Deploy to Pagodabox
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
   - ssh-keygen -N "" -f ~/.ssh/pagoda
