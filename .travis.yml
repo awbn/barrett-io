@@ -35,10 +35,9 @@ before_install:
 script:
   ### TESTS ###
   # Verify Pagodabox Boxfile exists
-  - "[ -f ./Boxfile1 ] || echo \"${RED}Pagodabox Boxfile Missing.\""
+  - "[ ! -f ./Boxfile ] && echo \"${RED}Pagodabox Boxfile Missing.\""
   - echo $?
   ### DEPLOYMENT ###
-  - echo $TRAVIS_TEST_STATUS
   - echo $TRAVIS_TEST_RESULT
   # Deploy to Pagodabox
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
