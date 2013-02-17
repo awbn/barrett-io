@@ -29,13 +29,13 @@ env:
     - NORMAL=$(tput sgr0)
 
 before_install:
-  - "git submodule update --init --recursive"
-  - gem install pagoda
+  - git submodule update --init --recursive
   - if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
 
 script:
   # Run tests here
-  - [[ -f "./Boxfile" ]] #Verify Pagodabox Boxfile exists
+  - ls
+  - [[ -f "Boxfile" ]] #Verify Pagodabox Boxfile exists
 
 after_failure:
   - echo "${RED}Build failed.  Skipping Pagodabox deployment.${NORMAL}"
@@ -45,6 +45,7 @@ after_success:
   #- if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'${NORMAL}"
   - ssh-keygen -N "" -f ~/.ssh/pagoda
+  - gem install pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
   - echo "Host git.pagodabox.com" >> ~/.ssh/config
   - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
