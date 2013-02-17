@@ -34,8 +34,7 @@ before_install:
 
 script:
   # Run tests here
-  - ls
-  - [[ -f "Boxfile" ]] #Verify Pagodabox Boxfile exists
+  - [ -f ./Boxfile ] #Verify Pagodabox Boxfile exists
 
 after_failure:
   - echo "${RED}Build failed.  Skipping Pagodabox deployment.${NORMAL}"
