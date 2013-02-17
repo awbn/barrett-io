@@ -35,7 +35,6 @@ script:
   # deployment from here down.
   - if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'${NORMAL}"
-  - echo "\[\e[01;32m\]test"  
   - gem install pagoda
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
@@ -45,6 +44,7 @@ script:
   - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
   - echo "   IdentityFile=${HOME}/.ssh/pagoda" >> ~/.ssh/config
   - echo "   IdentitiesOnly yes" >> ~/.ssh/config
+  - xyz
   - git remote add pagoda git@git.pagodabox.com:$PAGODABOX_APP.git
   - if [ "$TRAVIS_TEST_RESULT" -eq "0" ]; then git push --force pagoda $TRAVIS_BRANCH; fi
   - if [ "$TRAVIS_TEST_RESULT" -eq "0" ]; then pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD --app=$PAGODABOX_APP deploy; else echo "${RED}Build failed.  Skipping Pagoda deployment.${NORMAL}"; fi
