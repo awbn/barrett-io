@@ -33,14 +33,15 @@ before_install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
 
 script:
-  # Run tests here
-  - [ -f ./Boxfile ] #Verify Pagodabox Boxfile exists
+  # All tests should be listed here
+  # Verify Pagodabox Boxfile exists
+  - if [ ! -f ./Boxfile ]; then echo "${RED}Pagodabox Boxfile Missing." exit 1; fi
 
 after_failure:
-  - echo "${RED}Build failed.  Skipping Pagodabox deployment.${NORMAL}"
+  - echo "${RED}Build failed.  Skipping Pagodabox deployment."
 
 after_success:
-  # deployment from here down.
+  # Build successful.  Deploy to Pagodabox...
   #- if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'${NORMAL}"
   - ssh-keygen -N "" -f ~/.ssh/pagoda
