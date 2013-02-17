@@ -35,7 +35,7 @@ before_install:
 script:
   # All tests should be listed here
   # Verify Pagodabox Boxfile exists
-  - if [ ! -f ./Boxfile1 ]; then echo "${RED}Pagodabox Boxfile Missing."; exit 1; fi
+  - [ -f "./Boxfile" ] || echo "${RED}Pagodabox Boxfile Missing."
 
 after_failure:
   - echo "${RED}Build failed.  Skipping Pagodabox deployment."
