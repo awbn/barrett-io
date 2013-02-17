@@ -35,7 +35,7 @@ before_install:
 script:
   # All tests should be listed here
   # Verify Pagodabox Boxfile exists
-  - if [ ! -f ./Boxfile ]; then echo "${RED}Pagodabox Boxfile Missing." exit 1; fi
+  - if [ ! -f ./Boxfile1 ]; then echo "${RED}Pagodabox Boxfile Missing."; exit 1; fi
 
 after_failure:
   - echo "${RED}Build failed.  Skipping Pagodabox deployment."
@@ -43,7 +43,7 @@ after_failure:
 after_success:
   # Build successful.  Deploy to Pagodabox...
   #- if [ "$TRAVIS_BRANCH" == "master" ]; then export PAGODABOX_APP=$PAGODABOX_PROD; else export PAGODABOX_APP=$PAGODABOX_STAGING; fi
-  - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'${NORMAL}"
+  - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
   - ssh-keygen -N "" -f ~/.ssh/pagoda
   - gem install pagoda
   - pagoda --username=$PAGODABOX_USERNAME --password=$PAGODABOX_PASSWORD key:push --file=$HOME/.ssh/pagoda.pub
