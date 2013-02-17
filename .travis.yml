@@ -32,6 +32,10 @@ env:
 
 script:
   # tests would be here.
+  - echo "Run tests here"
+
+after_failure:
+  - echo "${RED}Build failed.  Skipping Pagodabox deployment.${NORMAL}"
 
 after_success:
   # deployment from here down.
