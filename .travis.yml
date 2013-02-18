@@ -17,9 +17,9 @@ notifications:
 env:
   global:
     # PAGODABOX_USERNAME
-    - secure: "c3tOOwmueCSeVub6VE1qFL7bGVlC4Xj1BIYSU89Z9iJpgjokn0O1dW1cGwuv\nf/jQdPBhWmi42gw7Jvzc6q4H05CgIvkOedcSxdiQXIU7a5oc+80PCt48WTtb\nroYNcLQXAvzC6gbu+9lhtkjpd1H6xcnrkmbKi2LCIOEQAfOgmk4="
+    #- secure: "c3tOOwmueCSeVub6VE1qFL7bGVlC4Xj1BIYSU89Z9iJpgjokn0O1dW1cGwuv\nf/jQdPBhWmi42gw7Jvzc6q4H05CgIvkOedcSxdiQXIU7a5oc+80PCt48WTtb\nroYNcLQXAvzC6gbu+9lhtkjpd1H6xcnrkmbKi2LCIOEQAfOgmk4="
     # PAGODABOX_PASSWORD
-    - secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
+    #- secure: "GW+XkC47U2mEAsFAXzN4sHcQLuVanglBH+IleBdaNn1yMvFA427hdFvJWoO0\nTkAJJZibdpMQ8fjlx/gwmj/b5W8xgP5jMcrLWCurDBWh8AR2gRvUbrZE45Sn\n4D1DRiOkw+UV9LYbdWpM+i+zj4sdHlZmuV2AkvgMEgB15uCSB40="
     # PAGODABOX_APP
     - PAGODABOX_STAGING=staging-barrett-io
     - PAGODABOX_PROD=barrett-io
@@ -36,6 +36,7 @@ script:
   ### TESTS ###
   # Verify Pagodabox Boxfile exists
   - if [ ! -f "./Boxfile" ]; then echo "${RED}Pagodabox Boxfile Missing."; export TRAVIS_TEST_RESULT=1; fi
+  - printenv
   ### DEPLOYMENT ###
   # Deploy to Pagodabox
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
