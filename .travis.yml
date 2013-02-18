@@ -36,7 +36,8 @@ script:
   ### TESTS ###
   # Verify Pagodabox Boxfile exists
   - if [ ! -f "./Boxfile" ]; then echo "${RED}Pagodabox Boxfile Missing."; export TRAVIS_TEST_RESULT=1; fi
-  - printenv
+  - MSG=$(git log -1 --pretty=%B)
+  - echo "${GREEN} $MSG"
   ### DEPLOYMENT ###
   # Deploy to Pagodabox
   - echo "${GREEN}Deploying branch '$TRAVIS_BRANCH' to '$PAGODABOX_APP'"
